@@ -11,14 +11,21 @@ const Register = () => {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/users/register/', {
-                params: { username: username, email: email, password: password, password_confirm: password_confirm, name: name }
+            const response = await axios.get('https://projetopwebapi.fly.dev/users/register/', {
+                params: { username, email, password, password_confirm, name }
             });
+
+            // Limpar os campos após o registro bem-sucedido
+            setUserName('');
+            setEmail('');
+            setPassword('');
+            setPasswordConfirm('');
+            setName('');
         } catch (error) {
             console.error('Erro na busca:', error);
-            
         }
     };
+
     return (
         <div style={{
             display: 'flex',
@@ -26,7 +33,7 @@ const Register = () => {
             justifyContent: 'center',
             alignItems: 'center',
             height: '100vh',
-            position: 'relative' 
+            position: 'relative'
         }}>
             <div style={{
                 zIndex: -1,
@@ -108,15 +115,15 @@ const Register = () => {
                 cursor: 'pointer'
             }}>Registrar-se</button>
             <a href='../' style={{
-                position: 'absolute', 
+                position: 'absolute',
                 bottom: '10px',
-                left: '10px', 
-                color: 'white', 
-                textDecoration: 'none', 
+                left: '10px',
+                color: 'white',
+                textDecoration: 'none',
                 padding: '10px 20px',
                 fontSize: '18px',
                 borderRadius: '5px',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 cursor: 'pointer'
             }}>Voltar</a>
         </div>

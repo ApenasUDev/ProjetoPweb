@@ -19,12 +19,12 @@ export default function Home() {
         top: 0,
         left: 0
       }}>
-        <Image
+         <Image
           src="/background1.jpg"
           alt="Yu-Gi-Oh Stantard Page"
           layout="fill"
           objectFit="cover"
-        />
+        /> 
       </div>
       <a href="login" style={linkStyle}><h2>Login</h2></a> 
       <a href="register" style={linkStyle}><h2>Registrar-se</h2></a> 

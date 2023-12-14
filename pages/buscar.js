@@ -1,25 +1,24 @@
+// pages/busca.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-
 const Busca = () => {
     const [nomeCard, setNomeCard] = useState('');
-    const [tipoSelecionado, setTipoSelecionado] = useState('opcao1'); 
+    const [tipoSelecionado, setTipoSelecionado] = useState('opcao1'); // Valor padrão, ajuste conforme necessário
     const [cards, setCards] = useState([]);
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/buscarcards/', {
+            const response = await axios.get('https://projetopwebapi.fly.dev/buscarcards/', {
                 params: { nome_card: nomeCard, tipo: tipoSelecionado }
             });
 
             setCards(response.data.cards);
         } catch (error) {
             console.error('Erro na busca:', error);
-            setCards([]);
+            setCards([]); // Limpa os resultados em caso de erro
         }
     };
-
     return (
         <div>
             <div style={{
@@ -30,12 +29,12 @@ const Busca = () => {
                 top: 0,
                 left: 0
             }}>
-                <Image
+               <Image
                     src="/background7.jpg"
                     alt="Yu-Gi-Oh Page 2"
                     layout="fill"
                     objectFit="cover"
-                />
+                /> 
             </div>
             <div>
             <a href='../' style={{
@@ -117,7 +116,7 @@ const Busca = () => {
                         alignItems: 'center',
                         marginBottom: '20px',
                     }}>
-                        <img src={card.image} alt={card.name} />
+                        <img src={card.image_small} alt={card.name} style={{ width: 'auto', height: 'auto' }}/>
                         <div style={{
                             marginLeft: '20px',
                             marginRight: '20px',
@@ -125,15 +124,25 @@ const Busca = () => {
                             padding: '10px 20px',
                             borderRadius: '5px',
                             backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        }}>
-                            <p>Nome: {card.name}</p>
-                            <p>Tipo: {card.type}</p>
-                            <p>Ataque: {card.atk}</p> 
-                            <p>Defesa: {card.def}</p>
-                            <p>Nível: {card.level}</p>
-                            <p>Raça: {card.race}</p>
-                            <p>Atributo: {card.attribute}</p>
-                            <p>Descrição: {card.desc}</p>
+                        }}> {card.type === 'Trap Card' || card.type === 'Spell Card' ? (
+                            <>
+                              <p>Nome: {card.name}</p>
+                              {/* <p>Tipo: {card.type}</p>
+                              <p>Raça: {card.race}</p>
+                              <p>Descrição: {card.desc}</p> */}
+                            </>
+                          ) : (
+                            <div>
+                              <p>Nome: {card.name}</p>
+                              {/* <p>Tipo: {card.type}</p>
+                              <p>Ataque: {card.atk}</p>
+                              <p>Defesa: {card.def}</p> */}
+                              <p>Nível: {card.level}</p>
+                              {/* <p>Raça: {card.race}</p>
+                              <p>Atributo: {card.attribute}</p> */}
+                              {/* <p>Descrição: {card.desc}</p> */}
+                            </div>
+                          )}
                         </div>
                     </li>
                 ))}

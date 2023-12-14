@@ -1,30 +1,41 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {useRouter} from 'next/router';
 import Image from 'next/image';
-
 const Login = () => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-
+    const router = useRouter();
+   
     const handleLogin = async () => {
         if (!username || !password) {
-            console.error('Username and password are required.');
+            console.error('Nome de usuário e senha são obrigatórios.');
             return;
         }
+
         try {
-            const response = await axios.get('http://127.0.0.1:8000/users/login/', {
-                params:{username: username,password: password,}
+            const response = await axios.get('https://projetopwebapi.fly.dev/users/login/', {
+                params:{ username: username,password: password,}
             });
+
             if (response.status === 200) {
-                console.log('Login successful');
+                // Lidar com o login bem-sucedido
+                console.log('Login bem-sucedido');
+                console.log('Token:', response.data.token);
+
+                // Armazenar o token no localStorage (ou outro método de armazenamento)
+                localStorage.setItem('token', response.data.token);
+
+                // Redirecionar para a página de usuário logado
+                router.push('userlog')
             } else {
-                console.error('Login failed. Status:', response.status);
+                console.error('Login falhou. Status:', response.status);
             }
         } catch (error) {
-            console.error('Error during login:', error);
+            console.error('Erro durante o login:', error);
         }
     };
-
+ 
     return (
         <div style={{
             display: 'flex',
